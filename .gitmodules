@@ -1,3 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "emacs/emacs.d"]
+	path = emacs/emacs.d
+	url = https://github.com/kevin5396/spacemacs
