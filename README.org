@@ -1,0 +1,11 @@
+#+TITLE: dotfiles
+
+use stow to symlink the dotfiles to home directory.
+
+e.g:
+#+BEGIN_SRC shell
+# symlink to home directory
+stow spacemacs
+# delete symlink
+stow -D spacemacs
+#+END_SRC
