@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: cs214hw
+# key: cs214hw
+# --
+\documentclass{article}
+
+\begin{document}
+
+\end{document}
