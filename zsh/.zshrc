@@ -95,8 +95,10 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 
 # Emacs
 # alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
-# alias ed="/Applications/Emacs.app/Contents/MacOS/Emacs --daemon"
-# alias e="emacsclient -t"
-# alias ec="emacsclient -c"
+alias ed="emacs --daemon"
+alias e="emacsclient -t"
+alias ec="emacsclient -c"
+#alias e="emacs -nw"
+
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi

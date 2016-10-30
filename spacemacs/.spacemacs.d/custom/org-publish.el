@@ -1,0 +1,146 @@
+;;; mostly copies from https://www.pank.eu/blog/blog-setup.html
+
+(require 'org)
+(require 'ox-publish)
+
+;; directories
+(setq user-full-name "Kevin Ling")
+(setq user-mail-address "lingkangwei.kevin@gmail.com")
+
+(defvar template-path "~/.spacemacs.d/custom/org-templates/")
+
+(setq org-html-divs '((preamble "header" "site-header")
+                      (content "main" "page-content")
+                      (postamble "div" "postamble"))
+      org-html-container-element "section"
+      org-html-metadata-timestamp-format "%Y-%m-%d"
+      org-html-checkbox-type 'html
+      org-html-html5-fancy t
+      org-html-htmlize-output-type 'css
+      org-html-head-include-default-style t
+      ;;org-html-style-default (pank.eu-head "head.html")
+      ;;org-html-head-include-scripts t
+      ;;org-html-scripts (pank.eu-head "head-extra.html")
+      org-html-doctype "html5")
+
+
+(defun book-website-html-postamble (info)
+  (concat
+   "<div id='disqus_thread'></div>
+<script type='text/javascript'>
+  // required: replace example with your forum shortname
+  var disqus_shortname = 'kevin5396blog';
+  (function() {
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] ||
+       document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript><p>Please enable JavaScript to view the
+  <a href='http://disqus.com/?ref_noscript'>comments powered by Disqus.</a></p>
+</noscript>"
+   (format "<div class='footer'>
+Copyright 2016 &copy; <a href='https://github.com/kevin5396'>Kangwei Ling</a><br/>
+Last updated %s <br/>
+Built with %s <br/>
+</div>
+<script type='text/javascript'>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+ ga('create', 'UA-76818760-1', 'auto');
+ ga('send', 'pageview');
+</script>"
+           (format-time-string "%Y-%m-%d")
+           org-html-creator-string)))
+
+(defun read-file-contents (filename)
+  "Return the contents of FILENAME."
+  (with-temp-buffer
+    (insert-file-contents filename)
+    (buffer-string)))
+
+(defun get-template (filename)
+  (read-file-contents (concat template-path filename)))
+
+(defun website-html-postamble (info)
+  (concat
+   (cond ((string= (car (plist-get info :title)) "Archive") "")
+         ((string= (car (plist-get info :title)) "Posts") "")
+         ((string= (car (plist-get info :title)) "Kevin's Blog") "")
+         (t (get-template "disqus.html"))
+         )
+   (get-template "footer.html")))
+(defvar website-html-head nil)
+(setq website-html-head (get-template "head.html"))
+(defun website-html-preamble (info)
+  (get-template "preamble.html"))
+
+;; org website setting!
+(require 'ox-publish)
+
+(setq org-publish-project-alist
+      `(
+        ;; org publish settings
+        ("blog-notes"
+         :base-directory "~/org/blog/_org"
+         :base-extension "org"
+         :publishing-directory "~/org/blog/"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :auto-sitemap t
+         :sitemap-filename "index.org"
+         :sitemap-title "Posts"
+         :sitemap-file-entry-format "%d  %t"
+         :sitemap-date-format "%b %e, %Y"
+         :sitemap-sort-files anti-chronologically
+         :sitemap-style list
+         :with-toc t
+         :author "kevin5396"
+         :email "lingkangwei.kevin at gmail dot com"
+         ;; :html-head  "<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+;; <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic' rel='stylesheet' type='text/css'>
+         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/code.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/main.css\"/>"
+         :html-head ,website-html-head
+         :html-postamble website-html-postamble
+         :html-preamble  website-html-preamble
+         :html-link-use-abs-url nil
+         )
+        ("blog-static"
+         :base-directory "~/org/blog/"
+         :base-extension "png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/org/blog/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ("blog" :components ("blog-notes" "blog-static"))
+        ("book-notes"
+         :base-directory "~/org/book"
+         :base-extension "org"
+         :publishing-directory "~/org/book"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :with-toc t
+         :author "kevin5396"
+         :email "lingkangwei.kevin at gmail dot com"
+         :html-head  "<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic' rel='stylesheet' type='text/css'>
+<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/book/style.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/code.css\" />"
+         :html-postamble book-website-html-postamble
+         :html-link-use-abs-url nil
+         )
+        ("book-static"
+         :base-directory "~/org/book/"
+         :base-extension "png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/org/book/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ("book" :components ("book-notes" "book-static"))
+        ))
+

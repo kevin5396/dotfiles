@@ -27,13 +27,18 @@ values."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/.spacemacs.d/layers")
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     osx
      python
      html
      yaml
+     (c-c++
+      :variables
+      c-c++-enable-clang-support t)
+     git
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -56,6 +61,9 @@ values."
      spell-checking
      syntax-checking
      version-control
+
+     ;; my own layers
+
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -90,7 +98,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https t
+   dotspacemacs-elpa-https nil
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
@@ -126,10 +134,11 @@ values."
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
+
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'text-mode
+   dotspacemacs-scratch-mode 'org-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -140,7 +149,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -234,7 +243,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -256,7 +265,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -299,46 +308,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq-default dotspacemacs-themes '(spacemacs-light spacemacs-dark leuven))
   (setq-default dotspacemacs-default-font '("Source Code Pro"
-                                            :size 14
+                                            :size 15
                                             :weight normal
                                             :width normal
                                             :powerline-scale 1.1))
   )
 
-(defun book-website-html-postamble (info)
-  (concat
-   "<div id='disqus_thread'></div>
-<script type='text/javascript'>
-  // required: replace example with your forum shortname
-  var disqus_shortname = 'kevin5396blog';
-  (function() {
-      var dsq = document.createElement('script');
-      dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] ||
-       document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript><p>Please enable JavaScript to view the
-  <a href='http://disqus.com/?ref_noscript'>comments powered by Disqus.</a></p>
-</noscript>"
-   (format "<div class='footer'>
-Copyright 2016 &copy; <a href='https://github.com/kevin5396'>Kangwei Ling</a><br/>
-Last updated %s <br/>
-Built with %s <br/>
-</div>
-<script type='text/javascript'>
- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
- })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
-
- ga('create', 'UA-76818760-1', 'auto');
- ga('send', 'pageview');
-
-</script>"
-           (format-time-string "%Y-%m-%d")
-           org-html-creator-string)))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -347,68 +322,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (require 'ox-publish)
-  (setq org-publish-project-alist
-      '(
-        ;; org publish settings
-        ("blog-notes"
-         :base-directory "~/org/blog"
-         :base-extension "org"
-         :publishing-directory "~/org/blog"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :auto-sitemap t
-         :sitemap-filename "archive.org"
-         :sitemap-title "Archive"
-         :sitemap-sort-files anti-chronologically
-         :sitemap-sort-folders t
-         :with-toc t
-         :body-only t
-         :author "kevin5396"
-         :email "lingkangwei.kevin at gmail dot com"
-         :html-head  "<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic' rel='stylesheet' type='text/css'>
-<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/blog/style.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/code.css\"/>"
-;         :html-postamble website-html-postamble
-         :html-link-home "/blog/index.html"
-         :html-link-up "/blog/archive.html"
-         :html-link-use-abs-url nil
-         )
-        ("blog-static"
-         :base-directory "~/org/blog/"
-         :base-extension "png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/org/blog/"
-         :recursive t
-         :publishing-function org-publish-attachment
-         )
-        ("blog" :components ("blog-notes" "blog-static"))
-        ("book-notes"
-         :base-directory "~/org/book"
-         :base-extension "org"
-         :publishing-directory "~/org/book"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :with-toc t
-         :author "kevin5396"
-         :email "lingkangwei.kevin at gmail dot com"
-         :html-head  "<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic' rel='stylesheet' type='text/css'>
-<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/book/style.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/code.css\" />"
-         :html-postamble book-website-html-postamble
-         :html-link-use-abs-url nil
-         )
-        ("book-static"
-         :base-directory "~/org/book/"
-         :base-extension "png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/org/book/"
-         :recursive t
-         :publishing-function org-publish-attachment
-         )
-        ("book" :components ("book-notes" "book-static"))
-        ))
-  (setq org-html-htmlize-output-type 'css)
+  (load-file "~/.spacemacs.d/custom/org-publish.el")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -420,7 +334,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yaml-mode auctex evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smartparens restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-unimpaired evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
+    (blog-admin names ctable git mustache simple-httpd ht org-page disaster company-c-headers cmake-mode clang-format reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yaml-mode auctex evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smartparens restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-unimpaired evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
  '(safe-local-variable-values (quote ((no-byte-compile t) (TeX-master . t)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

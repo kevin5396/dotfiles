@@ -3,3 +3,5 @@
 # Please adapt and uncomment the following lines:
 	name = kevin5396
 	email = lingkangwei.kevin@gmail.com
+[core]
+	excludesfile = /Users/kevin/.gitignore_global

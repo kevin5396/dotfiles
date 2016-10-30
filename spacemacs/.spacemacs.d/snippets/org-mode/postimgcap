@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: postimgcap
+# key: postimgcap
+# --
+#+BEGIN_HTML
+<div class="figure">
+     <img src="/assets/images/$1" />
+     <div class="cap">$2</div>
+</div>
+#+END_HTML
+$0
