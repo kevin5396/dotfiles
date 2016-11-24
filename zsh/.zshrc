@@ -87,6 +87,7 @@ fi
 export PATH="$PATH:/Library/TeX/texbin:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$PATH:$HOME/anaconda/bin"
 export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH=/usr/local/opt/llvm/bin:$PATH
 
 
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
