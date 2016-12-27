@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: report
+# key: report
+# --
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{$1}
+
+\author{${2:Kangwei Ling \ \ 5140219295}}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+$0
+
+\end{document}

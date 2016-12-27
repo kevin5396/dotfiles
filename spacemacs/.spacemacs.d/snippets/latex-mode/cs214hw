@@ -92,9 +92,9 @@
 \begin{center}
 {\LARGE\bf Homework $1}
 \end{center}
-\textbf{Group Name: Fibonado} \\
-\textbf{Group Member: \\Silence 5140219255, Kevin 5140219295, Caesar
-  5140219150, Lincoln 5140219205} \\
+\textbf{Group Name: Fibonado} \\\\
+\textbf{Group Member: \\\\Silence 5140219255, Kevin 5140219295, Caesar
+  5140219150, Lincoln 5140219205}
 
 \subsection*{Exercise 1}
 \begin{sol}
@@ -133,4 +133,5 @@
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
+%%% TeX-command-extra-options: "-shell-escape"
 %%% End:
