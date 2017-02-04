@@ -1,12 +1,16 @@
-;;; mostly copies from https://www.pank.eu/blog/blog-setup.html
-
+#+TITLE: Orgmode Setting
+* Initialization
+#+BEGIN_SRC emacs-lisp
 (require 'org)
 (require 'ox-publish)
 
 ;; directories
 (setq user-full-name "Kevin Ling")
 (setq user-mail-address "lingkangwei.kevin@gmail.com")
+#+END_SRC
 
+* Org export html settings
+#+BEGIN_SRC emacs-lisp
 (defvar template-path "~/.spacemacs.d/custom/org-templates/")
 
 (setq org-html-divs '((preamble "header" "site-header")
@@ -144,3 +148,30 @@ Built with %s <br/>
         ("book" :components ("book-notes" "book-static"))
         ))
 
+
+#+END_SRC
+
+* Org export pdf(latex) settings
+#+BEGIN_SRC emacs-lisp
+(require 'ox-latex)
+(unless (boundp 'org-latex-classes)
+  (setq org-latex-classes nil))
+(add-to-list 'org-latex-classes
+             '("article"
+               "\\documentclass[11pt]{article}
+               %\\usepackage[scaled=0.88]{beraserif}
+               %\\usepackage[scaled=0.85]{berasans}
+               %\\usepackage[scaled=0.84]{beramono}
+               \\renewcommand{\\rmdefault}{pplx} % rm
+               \\linespread{1.05}        % Palatino needs more leading
+               \\usepackage[scaled]{helvet} % ss
+%               \\usepackage{courier} % tt
+               \\usepackage{eulervm} % a better implementation of the euler package (not in gwTeX)
+               \\normalfont
+               \\usepackage[T1]{fontenc}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+END_SRC

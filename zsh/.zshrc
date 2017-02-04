@@ -101,5 +101,12 @@ alias e="emacsclient -t"
 alias ec="emacsclient -c"
 #alias e="emacs -nw"
 
+#git
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gpull="git pull"
+alias gpush="git push"
+
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi

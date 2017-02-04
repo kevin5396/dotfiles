@@ -73,6 +73,8 @@ values."
      (gtags :variables gtags-enable-by-default t)
      semantic
      ycmd
+     (chinese :variables
+              chinese-enable-fcitx t)
      ;; my own layers
      ;;frame-geometry
      )
@@ -254,7 +256,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -323,8 +325,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
    c-basic-offset 4
    tab-width 4)
   )
-
-
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -332,7 +332,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (load-file "~/.spacemacs.d/custom/org-publish.el")
+  (org-babel-load-file "~/.spacemacs.d/custom/orgmode.org")
   (set-variable 'ycmd-server-command `("python" "/Users/kevin/Developer/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/Users/kevin/Developer/ycmd/global_config.py")
   (add-hook 'c-mode-hook 'ycmd-mode)
@@ -349,7 +349,6 @@ you should place your code here."
   (eval-after-load 'company-c-headers
     (add-hook 'ede-minor-mode-hook (lambda ()
                                      (setq company-c-headers-path-system 'ede-object-system-include-path))))
-  (add-to-list 'org-latex-packages-alist '("" "CJKutf8" t))
 
   (require 'ox-latex)
   (add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -364,6 +363,14 @@ you should place your code here."
         '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+  (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 15 16)
+  ;; Make sure the following comes before `(fcitx-aggressive-setup)'
+  (setq fcitx-active-evil-states '(insert emacs)) ; if you use hybrid mode
+  (fcitx-aggressive-setup)
+  (fcitx-prefix-keys-add "M-m") ; M-m is common in Spacemacs
+  ;; (setq fcitx-use-dbus t) ; uncomment if you're using Linux
+
+  (global-hl-line-mode -1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -374,9 +381,46 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
+ '(org-latex-classes
+   (quote
+    (("article" "\\documentclass[11pt]{article}
+               %\\usepackage[scaled=0.88]{beraserif}
+               %\\usepackage[scaled=0.85]{berasans}
+               %\\usepackage[scaled=0.84]{beramono}
+               \\renewcommand{\\rmdefault}{pplx} % rm
+               \\linespread{1.05}        % Palatino needs more leading
+               \\usepackage[scaled]{helvet} % ss
+%               \\usepackage{courier} % tt
+               \\usepackage{eulervm} % a better implementation of the euler package (not in gwTeX)
+               \\normalfont
+               \\usepackage[T1]{fontenc}"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+     ("article" "\\documentclass[11pt]{article}"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+     ("report" "\\documentclass[11pt]{report}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("book" "\\documentclass[11pt]{book}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
  '(package-selected-packages
    (quote
-    (ob-sml sml-mode ein websocket latex-preview-pane flycheck-ycmd company-ycmd ycmd request-deferred deferred stickyfunc-enhance srefactor company-irony-c-headers flycheck-irony company-irony irony helm-gtags ggtags blog-admin names ctable git mustache simple-httpd ht org-page disaster company-c-headers cmake-mode clang-format reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yaml-mode auctex evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smartparens restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-unimpaired evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
+    (fcitx chinese-pyim-greatdict chinese-remote-input pangu-spacing find-by-pinyin-dired chinese-pyim chinese-pyim-basedict ace-pinyin pinyinlib ace-jump-mode ob-sml sml-mode ein websocket latex-preview-pane flycheck-ycmd company-ycmd ycmd request-deferred deferred stickyfunc-enhance srefactor company-irony-c-headers flycheck-irony company-irony irony helm-gtags ggtags blog-admin names ctable git mustache simple-httpd ht org-page disaster company-c-headers cmake-mode clang-format reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic company-auctex auctex-latexmk web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete yaml-mode auctex evil-visual-mark-mode evil-tutor evil-surround evil-mc evil-lisp-state evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smartparens restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-unimpaired evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-matchit evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
+ '(pyim-dicts nil)
  '(safe-local-variable-values
    (quote
     ((TeX-command-extra-options . "-shell-escape")
