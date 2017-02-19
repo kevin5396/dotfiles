@@ -1,19 +1,13 @@
-# -*- mode: snippet -*-
-# name: ps
-# key: ps
+# key: hw
+# name: hw-sol
 # --
 \documentclass[11pt]{article}
-%font setting
-%\usepackage[scaled=0.88]{beraserif}
-%\usepackage[scaled=0.85]{berasans}
-%\usepackage[scaled=0.84]{beramono}
-\renewcommand{\rmdefault}{pplx} % rm
-\linespread{1.05}        % Palatino needs more leading
-\usepackage[scaled]{helvet} % ss
-%               \usepackage{courier} % tt
-\usepackage{eulervm} % a better implementation of the euler package (not in gwTeX)
-\normalfont
+\usepackage[sc, osf]{mathpazo} % math & rm
+\linespread{1.05}        % Palatino needs more leading (space between lines)
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage[scaled=0.85]{beramono} % tt
 \usepackage[T1]{fontenc}
+\usepackage{textcomp}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -32,8 +26,8 @@
 \newtheorem{defi}{Definition}
 \newtheorem{hw}{Problem}
 \newenvironment{sol}
-  {\par\vspace{3mm}\noindent{\it Solution}.}
-  {\qed}
+{\par\vspace{3mm}\noindent{\it Solution}.}
+{\qed}
 
 \newcommand{\ov}{\overline}
 \newcommand{\cb}{{\cal B}}
@@ -53,20 +47,19 @@
 \newcommand{\dist}{\mbox{\rm dist}}
 \newcommand{\bn}{{\mathbf N}}
 \newcommand{\bz}{{\mathbf Z}}
+\newcommand{\bbR}{{\mathbb R}}
 
 \setlength{\parindent}{0pt}
-%\setlength{\parskip}{2ex}
+% \setlength{\parskip}{2ex}
 \newenvironment{proofof}[1]{\bigskip\noindent{\itshape #1. }}{\hfill$\Box$\medskip}
 
 \usepackage{enumerate,fullpage,proof,color}
 
-
-
 \title{$1}
-\author{$2}
+\author{Kangwei Ling}
 
 \begin{document}
 \maketitle
-\tableofcontents
+
 $0
 \end{document}

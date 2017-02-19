@@ -2,3 +2,9 @@
 # name: texfont
 # key: texfont
 # --
+\usepackage[sc, osf]{mathpazo} % math & rm
+\linespread{1.05}        % Palatino needs more leading (space between lines)
+\usepackage[scaled=0.90]{helvet} % ss
+\usepackage[scaled=0.85]{beramono} % tt
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
