@@ -361,20 +361,18 @@ you should place your code here."
   (require 'ox-latex)
   (add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-listings 'minted)
-  ;; (setq org-latex-minted-options
-  ;;       '(("bgcolor" "Black")))
 
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (setq-default fill-column 80)
 
-  (setq org-latex-pdf-process
-        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-p          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-  (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 15 16)
+  (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 14 16)
 
   (global-hl-line-mode -1)
   (setq evil-emacs-state-cursor '(bar . 3))
+
+  (add-hook 'Tex-mode-hook
+            (lambda ()
+              (setq Tex-command)))
   )
 
 (custom-set-variables

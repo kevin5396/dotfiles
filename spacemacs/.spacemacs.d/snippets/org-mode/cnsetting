@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: cnsetting
+# key: cnsetting
+# --
+#+LATEX_HEADER: \usepackage{xeCJK}
+#+LATEX_COMPILER: xelatex
