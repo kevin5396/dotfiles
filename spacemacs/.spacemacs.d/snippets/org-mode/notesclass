@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: notesclass
+# key: notesclass
+# --
+#+LATEX_CLASS: notes

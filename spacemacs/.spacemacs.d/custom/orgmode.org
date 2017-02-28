@@ -11,7 +11,7 @@
 #+END_SRC
 
 * Org export html settings
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_EXAMPLE
 (defvar template-path "~/.spacemacs.d/custom/org-templates/")
 
 (setq org-html-divs '((preamble "header" "site-header")
@@ -150,7 +150,7 @@ Built with %s <br/>
         ))
 
 
-#+END_SRC
+#+END_EXAMPLE
 
 * Org export pdf(latex) settings
 #+BEGIN_SRC emacs-lisp

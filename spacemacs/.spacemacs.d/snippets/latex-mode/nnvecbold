@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: nnvecbold
+# key: nnvecbold
+# --
+\newcommand{\bW} { \bm{W} }
+\newcommand{\bU} { \bm{U} }
+\newcommand{\bb} { \bm{b} }
+\newcommand{\bz} { \bm{z} }
+\newcommand{\bmf} { \bm{f} }
+\newcommand{\bx} { \bm{x} }
+\newcommand{\by} { \bm{y} }
+\newcommand{\yhat} { \bm{\hat{y}} }
+\newcommand{\btheta} { \bm{\theta} }
+\newcommand{\bg} { \bm{g} }
+\newcommand{\bh} { \bm{h} }
+\newcommand{\bL} { \bm{L} }
+\newcommand{\bI} { \bm{I} }
+\newcommand{\bdelta} { \bm{\delta} }
+\newcommand{\smx} { \text{softmax} }
+\newcommand{\relu} { \text{ReLU} }
+\newcommand{\sgn} { \text{sgn} }
+\newcommand{\diag} { \text{diag} }

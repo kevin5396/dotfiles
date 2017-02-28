@@ -60,24 +60,24 @@
   {\par\vspace{3mm}\noindent{\it Solution}.}
   {\qed}
 
-\newcommand{\ov}{\overline}
-\newcommand{\cb}{{\cal B}}
-\newcommand{\cc}{{\cal C}}
-\newcommand{\cd}{{\cal D}}
-\newcommand{\ce}{{\cal E}}
-\newcommand{\cf}{{\cal F}}
-\newcommand{\ch}{{\cal H}}
-\newcommand{\cl}{{\cal L}}
-\newcommand{\cm}{{\cal M}}
-\newcommand{\cp}{{\cal P}}
-\newcommand{\cz}{{\cal Z}}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\ra}{\rightarrow}
-\newcommand{\la}{\leftarrow}
-\newcommand{\Ra}{\Rightarrow}
-\newcommand{\dist}{\mbox{\rm dist}}
-\newcommand{\bn}{{\mathbf N}}
-\newcommand{\bz}{{\mathbf Z}}
+\newcommand{\bW} { \bm{W} }
+\newcommand{\bU} { \bm{U} }
+\newcommand{\bb} { \bm{b} }
+\newcommand{\bz} { \bm{z} }
+\newcommand{\bmf} { \bm{f} }
+\newcommand{\bx} { \bm{x} }
+\newcommand{\by} { \bm{y} }
+\newcommand{\yhat} { \bm{\hat{y}} }
+\newcommand{\btheta} { \bm{\theta} }
+\newcommand{\bg} { \bm{g} }
+\newcommand{\bh} { \bm{h} }
+\newcommand{\bL} { \bm{L} }
+\newcommand{\bI} { \bm{I} }
+\newcommand{\bdelta} { \bm{\delta} }
+\newcommand{\smx} { \text{softmax} }
+\newcommand{\relu} { \text{ReLU} }
+\newcommand{\sgn} { \text{sgn} }
+\newcommand{\diag} { \text{diag} }
 
 \setlength{\parindent}{0pt}
 %\setlength{\parskip}{2ex}

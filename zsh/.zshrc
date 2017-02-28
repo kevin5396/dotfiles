@@ -85,9 +85,9 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="$PATH:/Library/TeX/texbin:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="$PATH:$HOME/anaconda/bin"
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH=/usr/local/opt/llvm/bin:$PATH
+export PATH=$PATH:$HOME/anaconda/bin
+export PATH=$HOME/.rbenv/bin:$PATH
+export PATH=$HOME/.utils/bin:$PATH
 
 
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
@@ -98,7 +98,7 @@ export PATH=/usr/local/opt/llvm/bin:$PATH
 # alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
 alias ed="emacs --daemon"
 alias e="emacsclient -t"
-alias ec="emacsclient -c"
+alias ec="emacsclient -n -c"
 #alias e="emacs -nw"
 
 #git
