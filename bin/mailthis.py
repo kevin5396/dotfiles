@@ -32,11 +32,7 @@ Unless the -o option is given, the email is sent by forwarding to your local
 SMTP server, which then does the normal delivery process.  Your local machine
 must be running an SMTP server.
 """)
-    parser.add_argument('-d', '--directory',
-                        help="""Mail the contents of the specified directory,
-                        otherwise use the current directory.  Only the regular
-                        files in the directory are sent, and we don't recurse to
-                        subdirectories.""")
+    parser.add_argument('file', help="""Mail contents. Either a file or a directory, default to be the current directory.""")
     parser.add_argument('-o', '--output',
                         metavar='FILE',
                         help="""Print the composed message to FILE instead of
@@ -46,25 +42,32 @@ must be running an SMTP server.
                         default=[], dest='recipients',
                         help='A To: header value, qq short for qq mail set in mailconfig.py (gmail, sjtu)')
     args = parser.parse_args()
-    directory = args.directory
+    file = args.file
     recipients = args.recipients
     sender = config.login
-    if not directory:
-        directory = '.'
+    if not file:
+        file = '.'
     if len(recipients) == 0:
         recipients = [config.qq]
     else:
         recipients = [config.recipients[r] if r in ['qq', 'sjtu', 'gmail'] else r for r in recipients]
     # Create the enclosing (outer) message
     outer = MIMEMultipart()
-    outer['Subject'] = 'Contents of directory %s' % os.path.abspath(directory)
+    outer['Subject'] = 'Contents of %s' % os.path.abspath(file)
     outer['To'] = COMMASPACE.join(args.recipients)
     outer['From'] = sender
     outer.preamble = 'You will not see this in a MIME-aware mail reader.\n'
 
-
-    for filename in os.listdir(directory):
-        path = os.path.join(directory, filename)
+    file = os.path.expanduser(file)
+    directory = None
+    if os.path.isdir(file):
+        files = os.listdir(file)
+        directory = file
+    else:
+        files = [file]
+    for filename in files:
+        if directory is not None:
+            path = os.path.join(directory, filename)
         if not os.path.isfile(path):
             continue
         # Guess the content type based on the file's extension.  Encoding
