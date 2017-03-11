@@ -9,7 +9,7 @@
 \newcommand{\bmf} { \bm{f} }
 \newcommand{\bx} { \bm{x} }
 \newcommand{\by} { \bm{y} }
-\newcommand{\yhat} { \bm{\hat{y}} }
+\newcommand{\byhat} { \bm{\hat{y}} }
 \newcommand{\btheta} { \bm{\theta} }
 \newcommand{\bg} { \bm{g} }
 \newcommand{\bh} { \bm{h} }
@@ -20,3 +20,9 @@
 \newcommand{\relu} { \text{ReLU} }
 \newcommand{\sgn} { \text{sgn} }
 \newcommand{\diag} { \text{diag} }
+\newcommand{\be} { \bm{e}}
+\newcommand{\bet}[1][t]{ \be^{(#1)}}
+\newcommand{\bxt}[1][t]{ \bx^{(#1)}}
+\newcommand{\bht}[1][t]{ \bh^{(#1)}}
+\newcommand{\byt}[1][t]{ \by^{(#1)}}
+\newcommand{\byhatt}[1][t]{ \byhat^{(#1)}}

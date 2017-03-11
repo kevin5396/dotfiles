@@ -8,6 +8,7 @@
 \usepackage{bm}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage[usenames,dvipsnames]{color}
+\usepackage{float, graphicx}
 
 \providecommand{\abs}[1]{\lvert#1\rvert}
 \providecommand{\norm}[1]{\lVert#1\rVert}
@@ -41,7 +42,6 @@
 \newcommand{\Ra}{\Rightarrow}
 \newcommand{\dist}{\mbox{\rm dist}}
 \newcommand{\bn}{{\mathbf N}}
-\newcommand{\bz}{{\mathbf Z}}
 
 \setlength{\parindent}{0pt}
 %\setlength{\parskip}{2ex}

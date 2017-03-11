@@ -114,3 +114,11 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # for convenience
 export SJTU_NLP_LAB=linkw@202.120.38.2
 export SJTU_NLP_LAB_PORT=65320
+
+# helper functions
+
+# unzip and rm the zip file
+function unziprm() {
+    unzip $1 -d ./ && rm $1
+}
+
