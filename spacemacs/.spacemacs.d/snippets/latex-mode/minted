@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: minted
+# key: minted
+# --
+\usepackage{minted}
+\setminted[python]
+{
+  mathescape,
+  breaklines,
+}
