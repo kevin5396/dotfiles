@@ -84,8 +84,10 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export GOPATH=$HOME/.go
+export PATH=$GOPATH/bin:$PATH
 export PATH="$PATH:/Library/TeX/texbin:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH=$PATH:$HOME/anaconda/bin
+export PATH=$HOME/anaconda/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/.utils/bin:$PATH
 

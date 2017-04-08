@@ -10,6 +10,7 @@
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{float, graphicx}
 \usepackage{environ}
+\usepackage{booktabs}
 
 \providecommand{\abs}[1]{\lvert#1\rvert}
 \providecommand{\norm}[1]{\lVert#1\rVert}
