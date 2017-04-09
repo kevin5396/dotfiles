@@ -75,7 +75,6 @@ values."
      version-control
      (gtags :variables gtags-enable-by-default t)
      semantic
-     ycmd
      chinese
 
      ;; my own layers
