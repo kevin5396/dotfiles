@@ -2,5 +2,5 @@
 # name: cnsetting
 # key: cnsetting
 # --
-#+LATEX_HEADER: \usepackage{xeCJK}
 #+LATEX_COMPILER: xelatex
+#+LATEX_HEADER: \usepackage{xeCJK}\setCJKmainfont{Hiragino Sans GB W3}\setCJKsansfont{Hiragino Sans GB W3}\setCJKmonofont{Hiragino Sans GB W3}

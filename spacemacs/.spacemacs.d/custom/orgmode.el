@@ -24,9 +24,7 @@
   (add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-listings 'minted)
   (setq org-latex-minted-options
-        '(("mathescape" "true")
-          ("frame" "lines")
-          ("framesep" "2mm")))
+        '(("mathescape" "true")))
   (setq org-latex-pdf-process
         '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"

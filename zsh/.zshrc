@@ -98,6 +98,7 @@ export PATH=$HOME/.utils/bin:$PATH
 
 # Emacs
 # alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+alias em="emacs -n"
 alias ed="emacs --daemon"
 alias e="emacsclient -t"
 alias ec="emacsclient -n -c"
@@ -123,4 +124,3 @@ export SJTU_NLP_LAB_PORT=65320
 function unziprm() {
     unzip $1 -d ./ && rm $1
 }
-
