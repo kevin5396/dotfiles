@@ -7,7 +7,7 @@ export ZSH=/Users/kevin/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="honukai"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -60,13 +60,14 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='subl'
+   export EDITOR='nano'
 else
-   export EDITOR='subl'
+   export EDITOR='atom'
 fi
 
 # Compilation flags
@@ -124,3 +125,5 @@ export SJTU_NLP_LAB_PORT=65320
 function unziprm() {
     unzip $1 -d ./ && rm $1
 }
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
