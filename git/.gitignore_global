@@ -255,3 +255,6 @@ TSWLatexianTemp*
 
 # expex forward references with \gathertags
 *-tags.tex
+
+# ipython notebook
+.ipynb_checkpoints
