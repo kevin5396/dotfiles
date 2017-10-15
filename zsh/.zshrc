@@ -67,7 +67,7 @@ export LANG=en_US.UTF-8
 if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='nano'
 else
-   export EDITOR='atom'
+   export EDITOR='vim'
 fi
 
 # Compilation flags
@@ -91,6 +91,7 @@ export PATH="$PATH:/Library/TeX/texbin:$HOME/.rvm/bin" # Add RVM to PATH for scr
 export PATH=$HOME/anaconda/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/.utils/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
 
 
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
@@ -130,5 +131,5 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -U promptinit; promptinit
 prompt pure
-PURE_PROMPT_SYMBOL=➤
-
+PURE_PROMPT_SYMBOL=→
+export PATH="/usr/local/opt/texinfo/bin:$PATH"
