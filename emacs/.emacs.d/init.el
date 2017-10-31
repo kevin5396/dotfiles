@@ -1,4 +1,15 @@
-; beginning
+;;beginning
+
+;; Get rid of tool bar, menu bar and scroll bars.  On OS X we preserve the menu
+;; bar, since the top menu bar is always visible anyway, and we'd just empty it
+;; which is rather pointless.
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (and (eq system-type 'darwin) (fboundp 'menu-bar-mode))
+  (menu-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
 (setq message-log-max 10000)
 
 (setq load-prefer-newer t)
@@ -20,9 +31,10 @@
   (package-install 'use-package))
 
 (setq use-package-always-ensure t)
-
+;;(setq use-package-verbose t)
 (require 'diminish)
 (require 'bind-key)
+(require 'cl-lib)
 
 (use-package exec-path-from-shell
   :ensure t
@@ -75,15 +87,6 @@
 
 
 
-;; Get rid of tool bar, menu bar and scroll bars.  On OS X we preserve the menu
-;; bar, since the top menu bar is always visible anyway, and we'd just empty it
-;; which is rather pointless.
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (and (eq system-type 'darwin) (fboundp 'menu-bar-mode))
-  (menu-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
 
 ;; smoothish scroll
 (use-package mwheel
@@ -152,18 +155,18 @@
   :init (global-page-break-lines-mode)
   :diminish page-break-lines-mode)
 
-
+(defconst my-customize-file (locate-user-emacs-file "customize.el"))
 (use-package cus-edit
   :ensure nil
   :defer t
   :config
-  (setq custom-file "custom.el"
+  (setq custom-file my-customize-file
         custom-buffer-done-kill nil            ; Kill when existing
         custom-buffer-verbose-help nil         ; Remove redundant help text
         ;; Show me the real variable name
         custom-unlispify-tag-names nil
         custom-unlispify-menu-entries nil)
-  :init (load "custom.el" 'no-error 'no-message))
+  :init (load my-customize-file 'no-error 'no-message))
 
 
 (use-package smartparens
@@ -206,10 +209,19 @@
   :commands (aw-window-list)
   :defer t
   :config
+  (custom-set-faces
+   '(aw-leading-char-faces
+     ((t (:inherit ace-jump-face-foreground :height 3.0)))))
   (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0)
 	aw-scope 'global
 	)
   :bind (("C-x o" . ace-window)))
+
+;; automatically switch focus to new window
+(global-set-key (kbd "C-x 2")
+		(lambda () (interactive)(split-window-vertically)(other-window 1)))
+(global-set-key (kbd "C-x 3")
+		(lambda () (interactive)(split-window-horizontally)(other-window 1)))
 
 ;; Visual
 (use-package undo-tree
@@ -346,18 +358,40 @@
 
 
 ;;                     completion
+
+(use-package irony
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
+  :config
+  ;; replace the `completion-at-point' and `complete-symbol' bindings in
+  ;; irony-mode's buffers by irony-mode's function
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  )
+
 (use-package company                    ; Graphical (auto-)completion
   :ensure t
   :init (global-company-mode)
   :config
   (progn
+    (use-package company-irony :ensure t :defer t)
     (delete 'company-dabbrev company-backends)
     (setq company-tooltip-align-annotations t
 	  company-tooltip-minimum-width 27
 	  company-idle-delay 0.3
 	  company-tooltip-limit 10
 	  company-minimum-prefix-length 2
-	  company-tooltip-flip-when-above t))
+	  company-tooltip-flip-when-above t
+	  company-backends '((company-irony company-gtags))))
   :bind (:map company-active-map
               ("M-k" . company-select-next)
               ("M-i" . company-select-previous)
@@ -385,7 +419,9 @@
   :bind (("C-x g" . magit-status))
   :config
   (progn
-    (delete 'Git vc-handled-backends)))
+    (delete 'Git vc-handled-backends))
+  :diminish auto-revert-mode
+  :diminish magit-auto-revert-mode)
 
 
 ;; Latex

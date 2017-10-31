@@ -133,3 +133,4 @@ autoload -U promptinit; promptinit
 prompt pure
 PURE_PROMPT_SYMBOL=→
 export PATH="/usr/local/opt/texinfo/bin:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"

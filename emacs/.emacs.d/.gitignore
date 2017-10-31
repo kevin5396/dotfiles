@@ -1,9 +1,10 @@
 /url/cache
+/irony
 /.emacs.desktop
 /auto-save-list
 /.session
 /session.*
-/custom.el
+/customize.el
 *.elc
 .*.lock
 /trap
