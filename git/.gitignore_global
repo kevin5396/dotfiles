@@ -258,3 +258,4 @@ TSWLatexianTemp*
 
 # ipython notebook
 .ipynb_checkpoints
+.dir-locals.el

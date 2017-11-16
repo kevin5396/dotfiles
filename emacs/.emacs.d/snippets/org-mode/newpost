@@ -1,0 +1,16 @@
+# key: newpost
+# name: newpost
+# --
+#+options: toc:nil
+#+BEGIN_HTML
+---
+layout: ${1:post}
+title: $2
+date: `(format-time-string "%Y-%m-%d")`
+excerpt: $3
+tags: $4
+---
+#+END_HTML
+#+TITLE: $2
+#+TOC: headlines 2
+$0

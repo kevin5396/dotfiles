@@ -1,0 +1,4 @@
+# key: palafont
+# name: palafont
+# --
+#+LATEX_HEADER_EXTRA: \usepackage[sc, osf]{mathpazo}\linespread{1.05}\usepackage[scaled=0.90]{helvet}\usepackage[T1]{fontenc}\usepackage{textcomp}

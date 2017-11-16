@@ -119,6 +119,8 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # for convenience
 export SJTU_NLP_LAB=linkw@202.120.38.2
 export SJTU_NLP_LAB_PORT=65320
+export SJTU_NLP_EARTH=lingkw@202.120.38.2
+export SJTU_NLP_EARTH_PORT=65220
 
 # helper functions
 

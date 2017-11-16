@@ -1,4 +1,4 @@
-;;beginning
+;;; My Emacs Configuration
 
 ;; Get rid of tool bar, menu bar and scroll bars.  On OS X we preserve the menu
 ;; bar, since the top menu bar is always visible anyway, and we'd just empty it
@@ -198,24 +198,32 @@
 ;;;; dashboard
 (use-package dashboard
   :config
-  (progn
-    (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner nil))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner nil)
+  (setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 5)
+                        (registers . 5)))
   )
 
 
 ;; Navigation
-(use-package ace-window
-  :commands (aw-window-list)
-  :defer t
-  :config
-  (custom-set-faces
-   '(aw-leading-char-faces
-     ((t (:inherit ace-jump-face-foreground :height 3.0)))))
-  (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0)
-	aw-scope 'global
-	)
-  :bind (("C-x o" . ace-window)))
+;; (use-package ace-window
+;;   :commands (aw-window-list)
+;;   :defer t
+;;   :config
+;;   (custom-set-faces
+;;    '(aw-leading-char-faces
+;;      ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+;;   (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0)
+;; 	aw-scope 'global
+;; 	)
+;;   :bind (("C-x o" . ace-window)))
+
+(use-package switch-window
+  :ensure t
+  :bind (("C-x o" . switch-window)))
 
 ;; automatically switch focus to new window
 (global-set-key (kbd "C-x 2")
@@ -227,7 +235,10 @@
 (use-package undo-tree
   :ensure t
   :diminish (undo-tree-mode)
-  :init (global-undo-tree-mode))
+  :config
+  (global-undo-tree-mode)
+  (setq undo-tree-visualizer-timestamps t)
+  (setq undo-tree-visualizer-diff t))
 
 (use-package hl-line
   :init (global-hl-line-mode 1))
@@ -253,6 +264,29 @@
   :bind (("C-c t r" . rainbow-mode))
   :config (add-hook 'css-mode-hook #'rainbow-mode)
   :diminish (rainbow-mode))
+
+(defun config-whitespace-show-trailing-whitespace ()
+  (setq-local show-trailing-whitespace t))
+(add-hook 'prog-mode-hook #'config-whitespace-show-trailing-whitespace)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
+(use-package clean-aindent-mode
+  :ensure t
+  :defer t
+  :init (add-hook 'prog-mode-hook #'clean-aindent-mode))
+
+;; Indentation
+(use-package dtrt-indent
+  :ensure t
+  :defer t
+  :after cc-mode
+  :init (add-hook 'cc-mode-hook #'dtrt-indent-mode))
+
+(use-package ws-butler
+  :ensure t
+  :defer t
+  :init (add-hook 'c-mode-common-hook 'ws-butler-mode))
 
 
 ;;Project management
@@ -328,7 +362,7 @@
 
 (use-package helm-ag
   :ensure helm-ag
-;  :bind ("M-p" . helm-projectile-ag)
+  :bind ("C-c h a" . helm-projectile-ag)
   :commands (helm-ag helm-projectile-ag)
   :init (setq helm-ag-insert-at-point 'symbol))
 
@@ -355,13 +389,16 @@
 
 ;; Programming
 
-
+
+;; flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 ;;                     completion
 
 (use-package irony
   :ensure t
-  :defer t
   :init
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
@@ -383,7 +420,8 @@
   :init (global-company-mode)
   :config
   (progn
-    (use-package company-irony :ensure t :defer t)
+    (use-package company-irony :ensure t)
+    (use-package company-irony-c-headers :ensure t)
     (delete 'company-dabbrev company-backends)
     (setq company-tooltip-align-annotations t
 	  company-tooltip-minimum-width 27
@@ -391,7 +429,9 @@
 	  company-tooltip-limit 10
 	  company-minimum-prefix-length 2
 	  company-tooltip-flip-when-above t
-	  company-backends '((company-irony company-gtags))))
+	  )
+    (add-to-list 'company-backends '(company-irony-c-headers company-irony))
+    )
   :bind (:map company-active-map
               ("M-k" . company-select-next)
               ("M-i" . company-select-previous)
@@ -404,9 +444,7 @@
 
 (use-package yasnippet
   :ensure t
-  :defer t
   :config
-  (setq yas-snippet-dirs "~/.emacs.d/snippets")
   (yas-global-mode 1)
   :diminish (yas-minor-mode . " yas"))
 
@@ -415,13 +453,20 @@
 
 (use-package magit
   :ensure t
-  :defer 2
+  :defer t
   :bind (("C-x g" . magit-status))
   :config
   (progn
     (delete 'Git vc-handled-backends))
   :diminish auto-revert-mode
   :diminish magit-auto-revert-mode)
+
+(use-package git-gutter
+  :ensure t
+  :defer t
+  :config
+  (global-git-gutter-mode +1)
+  :diminish git-gutter-mode)
 
 
 ;; Latex
@@ -444,3 +489,18 @@
 (use-package company-anaconda
   :ensure t
   :init (add-to-list 'company-backends 'company-anaconda))
+
+
+;; c/c++
+(electric-pair-mode 1)
+(setq-default
+ c-default-style "bsd"
+ c-basic-offset 4
+ tab-width 4)
+
+;; rust
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'")
+
+

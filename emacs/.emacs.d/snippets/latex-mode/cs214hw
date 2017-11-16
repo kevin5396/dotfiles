@@ -1,0 +1,137 @@
+# -*- mode: snippet -*-
+# name: cs214hw
+# key: cs214hw
+# --
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{clrscode3e}
+\usepackage{listings}
+\usetikzlibrary{shapes.geometric}
+\tikzset{
+    tri/.style={
+        draw,
+        shape border rotate=0,
+        regular polygon,
+        regular polygon sides=3,
+        fill=gray,
+        node distance=2cm,
+        minimum height=4em
+    }
+}
+
+
+
+\lstdefinelanguage{Lambda}{%
+  morekeywords={%
+    if,then,else,fix % keywords go here
+  },%
+  morekeywords={[2]int},   % types go here
+  otherkeywords={:}, % operators go here
+  literate={% replace strings with symbols
+    {->}{{$\to$}}{2}
+    {multi}{{$\to^*$}}{2}
+    {lambda}{{$\lambda$}}{1}
+  },
+  basicstyle={\ttfamily},
+  keywordstyle={\bfseries},
+  keywordstyle={[2]\itshape}, % style for types
+  keepspaces,
+  mathescape % optional
+}[keywords,comments,strings]%
+
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem*{fact}{Fact}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem*{obs}{Observation}
+\newtheorem*{clm}{Claim}
+\newtheorem{eg}{Example}
+\newtheorem{ex}{Exercise}
+\newtheorem{defi}{Definition}
+\newtheorem{hw}{Problem}
+\newenvironment{sol}
+  {\par\vspace{3mm}\noindent{\it Solution}.}
+  {\qed}
+
+\newcommand{\bW} { \bm{W} }
+\newcommand{\bU} { \bm{U} }
+\newcommand{\bb} { \bm{b} }
+\newcommand{\bz} { \bm{z} }
+\newcommand{\bmf} { \bm{f} }
+\newcommand{\bx} { \bm{x} }
+\newcommand{\by} { \bm{y} }
+\newcommand{\yhat} { \bm{\hat{y}} }
+\newcommand{\btheta} { \bm{\theta} }
+\newcommand{\bg} { \bm{g} }
+\newcommand{\bh} { \bm{h} }
+\newcommand{\bL} { \bm{L} }
+\newcommand{\bI} { \bm{I} }
+\newcommand{\bdelta} { \bm{\delta} }
+\newcommand{\smx} { \text{softmax} }
+\newcommand{\relu} { \text{ReLU} }
+\newcommand{\sgn} { \text{sgn} }
+\newcommand{\diag} { \text{diag} }
+
+\setlength{\parindent}{0pt}
+%\setlength{\parskip}{2ex}
+\newenvironment{proofof}[1]{\bigskip\noindent{\itshape #1. }}{\hfill$\Box$\medskip}
+
+\usepackage{enumerate,fullpage,proof,color}
+\newcommand{\Infer}[2]{\vcenter{\infer{#2}{#1}}}
+\newcommand{\InferN}[3]{\vcenter{\infer[#3]{#2}{#1}}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bf Homework $1}
+\end{center}
+\textbf{Group Name: Fibonado} \\\\
+\textbf{Group Member: \\\\Silence 5140219255, Kevin 5140219295, Caesar
+  5140219150, Lincoln 5140219205}
+
+\subsection*{Exercise 1}
+\begin{sol}
+  $0
+\end{sol}
+\subsection*{Exercise 2}
+\begin{sol}
+  
+\end{sol}
+\subsection*{Exercise 3}
+\begin{sol}
+  
+\end{sol}
+\subsection*{Exercise 4}
+\begin{sol}
+  
+\end{sol}
+\subsection*{Exercise 5}
+\begin{sol}
+  
+\end{sol}
+\subsection*{Exercise 6}
+\begin{sol}
+  
+\end{sol}
+\subsection*{Exercise 7}
+\begin{sol}
+  
+\end{sol}
+\subsection*{Exercise 8}
+\begin{sol}
+  
+\end{sol}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

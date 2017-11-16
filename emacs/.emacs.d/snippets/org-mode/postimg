@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: postimg
+# key: postimg
+# --
+#+BEGIN_HTML
+<div class="figure">
+     <img src="/assets/images/$1" />
+</div>
+#+END_HTML
+$0
