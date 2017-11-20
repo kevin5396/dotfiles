@@ -88,7 +88,7 @@ fi
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
 export PATH="$PATH:/Library/TeX/texbin:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH=$HOME/anaconda/bin:$PATH
+export PATH=/usr/local/anaconda3/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/.utils/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
@@ -130,6 +130,10 @@ function unziprm() {
 }
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+#pure
+fpath=( "$HOME/.zfunctions" $fpath)
 
 autoload -U promptinit; promptinit
 prompt pure
