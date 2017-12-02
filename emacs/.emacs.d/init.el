@@ -243,6 +243,13 @@
 (use-package hl-line
   :init (global-hl-line-mode 1))
 
+;; disable bold
+(add-hook 'prog-mode-hook (lambda ()
+                            (mapc
+                             (lambda (face)
+                               (set-face-attribute face nil :weight 'normal :underline nil))
+                             (face-list))))
+
 (use-package rainbow-delimiters
   :ensure t
   :defer t
@@ -503,4 +510,25 @@
   :ensure t
   :mode "\\.rs\\'")
 
+(use-package company-racer)
+(use-package flycheck-rust
+  :ensure t
+  :init
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  :diminish flycheck-mode)
+(use-package cargo
+  :ensure t
+  :init
+  (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
+(use-package racer
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
+
+;; toml
+(use-package toml-mode
+  :defer t
+  :ensure t)
