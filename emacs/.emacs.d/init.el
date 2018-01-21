@@ -96,6 +96,8 @@
   (setq mouse-wheel-progressive-speed nil
 	mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil))))
 
+
+
 ;; hide the fringe
 (set-fringe-mode '(0 . 0))
 
@@ -120,9 +122,10 @@
 
 
 ;;; font
-(set-face-attribute 'default nil
-                    :family "Source Code Pro" :height 130)
+(add-to-list 'default-frame-alist
+             '(font . "Source Code Pro-12"))
 
+(set-face-attribute 'linum nil :height 110 :slant 'normal)
 
 ;; utf-8 all the things
 (set-terminal-coding-system 'utf-8)

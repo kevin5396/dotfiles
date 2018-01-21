@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <17/11/16 14:16:36 /Users/kevin/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <17/12/29 10:34:26 /Users/kevin/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
@@ -32,4 +32,23 @@
   ("gid-string" "linkw")
   ("readlink" "\\readlink")
   ("env-u-option" t)
-  ("git" "\\git")))
+  ("git" "\\git"))
+ (["ssh" "lingkw" "202.120.38.2#65220" nil nil]
+  ("uname" "Linux 4.10.0-42-generic")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("remote-shell" "/bin/sh")
+  ("file-exists" "test -e")
+  ("stat" nil)
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("id" "/usr/bin/id")
+  ("gid-string" "lingkw")
+  ("gid-integer" 1009)
+  ("readlink" "\\readlink")
+  ("~" "/home/lingkw"))
+ (["ssh" "lingkw" "202.120.38.2" nil nil]
+  nil))
