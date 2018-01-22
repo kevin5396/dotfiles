@@ -19,10 +19,14 @@
 (setq package-enable-at-startup nil)
 
 ;; set to faster mirrors
-(setq package-archives
-      '(("melpa"        . "http://elpa.emacs-china.org/melpa/")
-        ("gnu"          . "http://elpa.emacs-china.org/gnu/")
-        ("org"          . "http://elpa.emacs-china.org/org/")))
+;; (setq package-archives
+;;       '(("melpa"        . "http://elpa.emacs-china.org/melpa-stable/")
+;;         ("gnu"          . "http://elpa.emacs-china.org/gnu/")
+;;         ("org"          . "http://elpa.emacs-china.org/org/")))
+
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 
 (package-initialize)
 
@@ -31,8 +35,11 @@
   (package-install 'use-package))
 
 (setq use-package-always-ensure t)
-;;(setq use-package-verbose t)
-(require 'diminish)
+(setq use-package-verbose t)
+
+(eval-when-compile
+  (require 'use-package))
+
 (require 'bind-key)
 (require 'cl-lib)
 
@@ -305,7 +312,6 @@
   :config
   (setq projectile-completion-system 'helm)
   (projectile-global-mode)
-  (helm-projectile-on)
   (setq projectile-enable-caching nil)
   :diminish (projectile-mode))
 
@@ -366,9 +372,16 @@
 (use-package helm-swoop
   :ensure t
   :bind (("M-m" . helm-swoop)
-         ("M-M" . helm-swoop-back-to-last-point))
+	 ("M-M" . helm-swoop-back-to-last-point))
   :init
   (bind-key "M-m" 'helm-swoop-from-isearch isearch-mode-map))
+
+;; (use-package helm-swoop
+;;   :ensure t
+;;   :bind (("M-m" . helm-swoop)
+;;          ("M-M" . helm-swoop-back-to-last-point))
+;;   :init
+;;   (bind-key "M-m" 'helm-swoop-from-isearch isearch-mode-map))
 
 (use-package helm-ag
   :ensure helm-ag
