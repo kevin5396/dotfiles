@@ -19,14 +19,11 @@
 (setq package-enable-at-startup nil)
 
 ;; set to faster mirrors
-;; (setq package-archives
-;;       '(("melpa"        . "http://elpa.emacs-china.org/melpa-stable/")
-;;         ("gnu"          . "http://elpa.emacs-china.org/gnu/")
-;;         ("org"          . "http://elpa.emacs-china.org/org/")))
-
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(setq package-archives
+      '(("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
+        ("melpa"        . "http://elpa.emacs-china.org/melpa/")
+        ("gnu"          . "http://elpa.emacs-china.org/gnu/")
+        ("org"          . "http://elpa.emacs-china.org/org/")))
 
 (package-initialize)
 
