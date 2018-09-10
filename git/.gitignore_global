@@ -14,6 +14,7 @@
 *~
 \#*\#
 .idea*
+.vscode*
 
 # Logs and databases #
 ######################

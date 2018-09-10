@@ -12,7 +12,6 @@ brew install proxychains-ng
 brew cask install dash flux the-unarchiver google-chrome iina
 brew cask install shadowsocksx-ng
 brew cask install transmission
-brew cask install virtualbox
 brew install vim
 
 # cask emacs
@@ -30,20 +29,3 @@ chsh -s $(which zsh)
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-cd $DOT_PATH
-git submodule update --init --recursive
-cd pure
-mkdir -p $HOME/.zfunctions
-ln -s $PWD/pure.zsh $HOME/.zfunctions/prompt_pure_setup
-ln -s $PWD/async.zsh $HOME/.zfunctions/async
-
-
-
-# anaconda, python
-brew cask install anaconda
-
-# clang, make sure to install xcode first
-brew install --with-toolchain llvm
-
-# rust !
-curl https://sh.rustup.rs -sSf | sh

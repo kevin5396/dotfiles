@@ -88,7 +88,7 @@ fi
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$PATH
 export PATH="$PATH:/Library/TeX/texbin:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH=/usr/local/anaconda3/bin:$PATH
+export PATH=$HOME/anaconda3/bin:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 export PATH=$HOME/.utils/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH

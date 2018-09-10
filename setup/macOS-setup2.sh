@@ -9,8 +9,6 @@ ln -s $PWD/async.zsh $HOME/.zfunctions/async
 
 
 
-# anaconda, python
-brew cask install anaconda
 
 # clang, make sure to install xcode first
 brew install --with-toolchain llvm
