@@ -94,8 +94,6 @@ export PATH=$HOME/.utils/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 
 
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
 
 
 # Emacs
@@ -124,7 +122,6 @@ function unziprm() {
     unzip $1 -d ./ && rm $1
 }
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 #pure
