@@ -94,8 +94,6 @@ export PATH=$HOME/.utils/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 
 
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
 
 
 # Emacs
@@ -124,7 +122,6 @@ function unziprm() {
     unzip $1 -d ./ && rm $1
 }
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 #pure
@@ -133,20 +130,3 @@ fpath=( "$HOME/.zfunctions" $fpath)
 autoload -U promptinit; promptinit
 prompt pure
 PURE_PROMPT_SYMBOL=→
-
-export PATH="/usr/local/opt/texinfo/bin:$PATH"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-
-
-export ANDROID_SDK_ROOT=/Users/kevin/x/Fall2018/OS/f18-hmwk2-setup/android-sdk
-export ANDROID_SDK_HOME=/Users/kevin/x/Fall2018/OS/f18-hmwk2-setup/android-sdk
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-export PATH="$ANDROID_SDK_HOME/tools:$PATH"
-export GOPATH=$HOME/x/Fall2018/DS/4113:$GOPATH
-
-# added by travis gem
-[ -f /Users/kevin/.travis/travis.sh ] && source /Users/kevin/.travis/travis.sh
-
-
-# awscli
-export PATH="$PATH:$HOME/.local/bin"
