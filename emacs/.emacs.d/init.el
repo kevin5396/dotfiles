@@ -19,12 +19,14 @@
 (setq package-enable-at-startup nil)
 
 ;; set to faster mirrors
-(setq package-archives
-      '(("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
-        ("melpa"        . "http://elpa.emacs-china.org/melpa/")
-        ("gnu"          . "http://elpa.emacs-china.org/gnu/")
-        ("org"          . "http://elpa.emacs-china.org/org/")))
-
+;(setq package-archives
+;      '(("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
+;        ("melpa"        . "http://elpa.emacs-china.org/melpa/")
+;        ("gnu"          . "http://elpa.emacs-china.org/gnu/")
+;        ("org"          . "http://elpa.emacs-china.org/org/")))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -35,7 +37,7 @@
 (setq use-package-verbose t)
 
 (eval-when-compile
-  (require 'use-package))
+      (require 'use-package))
 
 (require 'bind-key)
 (require 'cl-lib)
@@ -126,8 +128,8 @@
 
 
 ;;; font
-(add-to-list 'default-frame-alist
-             '(font . "Source Code Pro-12"))
+;(add-to-list 'default-frame-alist
+;             '(font . "Source Code Pro-12"))
 
 (set-face-attribute 'linum nil :height 110 :slant 'normal)
 
@@ -545,3 +547,14 @@
 (use-package toml-mode
   :defer t
   :ensure t)
+
+;; helm cscope
+(use-package helm-cscope
+  :ensure t
+  :bind (("M-t" . helm-cscope-find-this-symbol)
+         ("M-r" . helm-cscope-find-global-definition)
+         ("M-g M-c" . helm-cscope-find-called-function)
+         ("M-g M-p" . helm-cscope-find-calling-this-function))
+  :init
+  (add-hook 'c-mode-hook 'helm-cscope-mode)
+  (add-hook 'c++-mode-hook 'helm-cscope-mode))

@@ -98,10 +98,12 @@ export PATH=$HOME/.cargo/bin:$PATH
 
 # Emacs
 # alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+alias emacs="emacs25"
 alias em="emacs -n"
 alias ed="emacs --daemon"
 alias e="emacsclient -t"
 alias ec="emacsclient -n -c"
+alias edkill="emacsclient -e '(save-buffers-kill-emacs)'"
 #alias e="emacs -nw"
 
 #git
